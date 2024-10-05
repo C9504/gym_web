@@ -1,0 +1,64 @@
+// Sobrescribir las variables de Bootstrap
+$primary: #b00020;
+/* Cambiar el color primario de Bootstrap */
+$secondary: #6c757d;
+
+// Importar Bootstrap con las variables modificadas
+@import '~bootstrap/scss/bootstrap';
+
+.gym-background-img {
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.5) 100%), url("../public/assets/img/main-img2.jpg");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.gym-content {
+    position: relative;
+    z-index: 1;
+    padding: 20px;
+    color: #fff;
+    /* Ajusta el color del texto si es necesario */
+}
+
+.hero-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    /* Ocupar toda la pantalla */
+    color: white;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+    padding: 20px;
+}
+
+.hero-content {
+    z-index: 2;
+}
+
+.hero-title {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.hero-subtitle {
+    font-size: 1.25rem;
+    max-width: 700px;
+    margin: 0 auto;
+    margin-bottom: 30px;
+}
+
+.hero-btn {
+    padding: 10px 40px;
+    font-size: 1.2rem;
+}

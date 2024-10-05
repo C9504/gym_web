@@ -1,0 +1,33 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: web-distributions
+  namespace: negrdo
+  labels:
+    k8s-app: web-distributions
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      k8s-app: web-distributions
+  template:
+    metadata:
+      name: web-distributions
+      labels:
+        k8s-app: web-distributions
+    spec:
+      containers:
+        - name: web-distributions
+          image: cesar9504/web-distributions:<IMAGE_TAG>
+          resources:
+            limits:
+              memory: "300Mi"
+              cpu: "500m"
+            requests:
+              memory: "64Mi"
+              cpu: "200m"
+
+          imagePullPolicy: Always
+          securityContext:
+            privileged: true
+      restartPolicy: Always
