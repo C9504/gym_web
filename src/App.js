@@ -1,5 +1,4 @@
 import React from "react";
-import { ReactKeycloakProvider, useKeycloak } from "@react-keycloak/web";
 import { Route, Routes } from "react-router-dom";
 import Layout from "./components/public/layout";
 import IdentityProvider from "./services/identity-provider";
@@ -8,6 +7,11 @@ import Progress from "./components/private/progress";
 import Contact from "./components/public/contact";
 import Classes from "./components/public/classes";
 import Trainers from "./components/public/trainers";
+import Reservations from "./components/private/reservations";
+import About from "./components/public/about";
+import Subscriptions from "./components/private/subscriptions";
+import Profile from "./components/private/profile";
+import { ReactKeycloakProvider, useKeycloak } from "@react-keycloak/web";
 
 function Main() {
 
@@ -28,18 +32,26 @@ function Main() {
     <Routes>
       <Route path='/' element={<Layout />}>
         <Route index element={<Welcome />} />
+        <Route path='/about-us' element={<About />} />
         <Route path='/contact' element={<Contact />} />
         <Route path='/trainers' element={<Trainers />} />
         <Route path='/classes' element={<Classes />} />
          {keycloak.hasResourceRole('member') && (
           <>
+            <Route path='/subscriptions' element={<Subscriptions />} />
             <Route path='/progress' element={<Progress />} />
+            <Route path='/reservations' element={<Reservations />} />
           </>
         )}
 
         {keycloak.hasResourceRole('trainer') && (
           <>
 
+          </>
+        )}
+        {keycloak.authenticated && (
+          <>
+            <Route path='/profile' element={<Profile />} />
           </>
         )}
       </Route>

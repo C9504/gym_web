@@ -1,5 +1,5 @@
 export function apiRequest() {
-    return 'http://localhost:8009';
+    return 'http://192.168.49.2:31273/api';
 };
 
 export function getIdentity() {
@@ -15,7 +15,7 @@ export function getClient() {
 };
 
 export function apiEvents() {
-    return 'http://localhost:8009';
+    return 'http://192.168.49.2:31273';
 };
 
 export function apiGallery() {
