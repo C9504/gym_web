@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import Layout from "./components/public/layout";
-import IdentityProvider from "./services/identity-provider";
+import keycloak from "./services/identity-provider";
 import Welcome from "./components/public/welcome";
 import Progress from "./components/private/progress";
 import Contact from "./components/public/contact";
@@ -61,7 +61,7 @@ function Main() {
 
 function App() {
   return (
-    <ReactKeycloakProvider authClient={IdentityProvider}>
+    <ReactKeycloakProvider authClient={keycloak}>
       {/* <StatusProvider> */}
       <Main />
       {/* </StatusProvider> */}

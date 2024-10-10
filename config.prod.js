@@ -1,5 +1,5 @@
 export function apiRequest() {
-    return 'https://ds.negrdo.com';
+    return 'https://api.negrdo.com/api';
 };
 
 export function getIdentity() {
@@ -7,17 +7,17 @@ export function getIdentity() {
 };
 
 export function getRealm() {
-    return 'negrdo';
+    return 'gym';
 };
 
 export function getClient() {
-    return 'negrdo-distributions-web';
-}
+    return 'gym_web';
+};
 
 export function apiEvents() {
-    return 'https://events.negrdo.com';
+    return 'http://192.168.49.2:31273';
 };
 
 export function apiGallery() {
-    return 'https://gallery.negrdo.com/api';
+    return 'http://localhost:1995/api';
 };

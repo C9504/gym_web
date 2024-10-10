@@ -1,24 +1,24 @@
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: web-distributions
+  name: gym-web
   namespace: negrdo
   labels:
-    k8s-app: web-distributions
+    k8s-app: gym-web
 spec:
   replicas: 1
   selector:
     matchLabels:
-      k8s-app: web-distributions
+      k8s-app: gym-web
   template:
     metadata:
-      name: web-distributions
+      name: gym-web
       labels:
-        k8s-app: web-distributions
+        k8s-app: gym-web
     spec:
       containers:
-        - name: web-distributions
-          image: cesar9504/web-distributions:<IMAGE_TAG>
+        - name: gym-web
+          image: cesar9504/gym-web:<IMAGE_TAG>
           resources:
             limits:
               memory: "300Mi"
@@ -31,3 +31,21 @@ spec:
           securityContext:
             privileged: true
       restartPolicy: Always
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: gym-web
+  namespace: negrdo
+  labels:
+    k8s-app: gym-web
+spec:
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 80
+      nodePort: 30996
+  selector:
+    k8s-app: gym-web
+  type: NodePort

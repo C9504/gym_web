@@ -1,5 +1,5 @@
 export function apiRequest() {
-    return 'http://192.168.49.2:31273/api';
+    return 'https://api.negrdo.com/api';
 };
 
 export function getIdentity() {
