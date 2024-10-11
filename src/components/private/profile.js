@@ -92,7 +92,7 @@ const Profile = () => {
                 <Row className="mb-3">
                     <Col>
                         <Form.Label><span className="text-danger">*</span> Email</Form.Label>
-                        <Form.Control type="email" size="sm" defaultValue={profile?.email ? profile?.email : keycloak?.profile?.email} onChange={(e) => setProfile({ ...profile, email: e.target.value })} placeholder="Email" disabled={updating} required />
+                        <Form.Control type="email" size="sm" defaultValue={profile?.email ? profile?.email : keycloak?.profile?.email} onChange={(e) => setProfile({ ...profile, email: e.target.value })} placeholder="Email" readOnly disabled={updating} required />
                     </Col>
                     <Col>
                         <Form.Label><span className="text-danger">*</span> Genero</Form.Label>
