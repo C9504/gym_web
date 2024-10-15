@@ -31,6 +31,15 @@ spec:
           securityContext:
             privileged: true
       restartPolicy: Always
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: size
+                    operator: In
+                    values:
+                      - medium
 
 ---
 kind: Service

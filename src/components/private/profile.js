@@ -19,7 +19,7 @@ const Profile = () => {
     }, []);
 
     const getProfile = async () => {
-        await axios.get(`${apiRequest()}/members/me`, { headers: { Authorization: `Bearer ${keycloak.token}` }, withCredentials: true }).then((res) => {
+        await axios.get(`${apiRequest()}/members/me`, { headers: { Authorization: `Bearer ${keycloak.token}` }, withCredentials: false }).then((res) => {
             setProfile(res.data);
             console.log(res.data);
             if (res.status === 200) {
@@ -35,7 +35,7 @@ const Profile = () => {
         event.preventDefault();
         setUpdating(true);
         const toastId = toast.loading("Actualizando...", { hideProgressBar: false, position: "bottom-center" });
-        await axios.post(`${apiRequest()}/members`, profile, { headers: { Authorization: `Bearer ${keycloak.token}` }, withCredentials: true }).then((res) => {
+        await axios.post(`${apiRequest()}/members`, profile, { headers: { Authorization: `Bearer ${keycloak.token}` }, withCredentials: false }).then((res) => {
             if (res.status === 200) {
                 event.target.reset();
                 setUpdating(false);
@@ -53,7 +53,7 @@ const Profile = () => {
         event.preventDefault();
         setUpdating(true);
         const toastId = toast.loading("Actualizando...", { hideProgressBar: false, position: "bottom-center" });
-        await axios.put(`${apiRequest()}/members/${profile?.id}`, profile, { headers: { Authorization: `Bearer ${keycloak.token}` }, withCredentials: true }).then((res) => {
+        await axios.put(`${apiRequest()}/members/${profile?.id}`, profile, { headers: { Authorization: `Bearer ${keycloak.token}` }, withCredentials: false }).then((res) => {
             if (res.status === 200) {
                 setUpdating(false);
                 setExists(true);
@@ -110,7 +110,7 @@ const Profile = () => {
                 <Row className="mb-3">
                     <Col>
                         <Form.Label><span className="text-danger">*</span> Dirección</Form.Label>
-                        <Form.Control type="text" size="sm" value={profile?.address} onChange={(e) => setProfile({ ...profile, address: e.target.value })} placeholder="Dirección" disabled={updating} required />
+                        <Form.Control type="text" size="sm" value={profile?.address || ''} onChange={(e) => setProfile({ ...profile, address: e.target.value })} placeholder="Dirección" disabled={updating} required />
                     </Col>
                     <Col>
                         <Form.Label><span className="text-danger">*</span> Fecha de cumpleaños</Form.Label>

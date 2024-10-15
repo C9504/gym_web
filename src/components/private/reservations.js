@@ -10,7 +10,11 @@ const Reservations = () => {
     const { keycloak, initialized } = useKeycloak();
     const [reservations, setReservations] = useState([]);
 
-    const [createCustomer, setCreateCustomer] = useState({});
+    const [createReservation, setCreateReservation] = useState({
+        gymClass: {
+            id: ''
+        }
+    });
   const [create, setCreate] = useState(false);
   const handleCloseCreate = () => setCreate(false);
   const handleShowCreate = () => setCreate(true);
@@ -27,7 +31,7 @@ const Reservations = () => {
     }, []);
 
     const getReservations = async () => {
-        await axios.get(`${apiRequest()}/reservations`, { headers: { Authorization: `Bearer ${keycloak.token}` }, withCredentials: false }).then((res) => {
+        await axios.get(`${apiRequest()}/reservations/me`, { headers: { Authorization: `Bearer ${keycloak.token}` }, withCredentials: false }).then((res) => {
             setReservations(res.data);
             console.log(res.data);
         }).catch((error) => {
@@ -39,9 +43,9 @@ const Reservations = () => {
         event.preventDefault();
         setCreating(true);
         const toastId = toast.loading("Guardando...", { hideProgressBar: false, position: "bottom-center" });
-        await axios.post(`${apiRequest()}/reservations`, createCustomer, { headers: { Authorization: `Bearer ${keycloak.token}` }, withCredentials: true }).then((res) => {
+        await axios.post(`${apiRequest()}/reservations`, createReservation, { headers: { Authorization: `Bearer ${keycloak.token}` }, withCredentials: false }).then((res) => {
           if (res.status === 200) {
-            setCreateCustomer({});
+            setCreateReservation({});
             event.target.reset();
             handleCloseCreate();
             toast.update(toastId, { render: "Operación realizada con exito", hideProgressBar: true, type: "success", isLoading: false, autoClose: 5000, closeOnClick: true });
@@ -69,19 +73,19 @@ const Reservations = () => {
                     <br />
                     <Form onSubmit={saveReservation}>
                         <Form.Label>Razon social</Form.Label>
-                        <Form.Control className="mb-3" size="sm" type="text" defaultValue={createCustomer.corporateName} onChange={(e) => setCreateCustomer({ ...createCustomer, corporateName: e.target.value })} required />
+                        <Form.Control className="mb-3" size="sm" type="text" defaultValue={createReservation.corporateName} onChange={(e) => setCreateReservation({ ...createReservation, corporateName: e.target.value })} required />
                         <Form.Label>Representante</Form.Label>
-                        <Form.Control className="mb-3" size="sm" type="text" defaultValue={createCustomer.owner} onChange={(e) => setCreateCustomer({ ...createCustomer, owner: e.target.value })} required />
+                        <Form.Control className="mb-3" size="sm" type="text" defaultValue={createReservation.owner} onChange={(e) => setCreateReservation({ ...createReservation, owner: e.target.value })} required />
                         <Form.Label>Correo</Form.Label>
-                        <Form.Control className="mb-3" size="sm" type="email" defaultValue={createCustomer.email} onChange={(e) => setCreateCustomer({ ...createCustomer, email: e.target.value })} required />
+                        <Form.Control className="mb-3" size="sm" type="email" defaultValue={createReservation.email} onChange={(e) => setCreateReservation({ ...createReservation, email: e.target.value })} required />
                         <Form.Label>Telefono</Form.Label>
-                        <Form.Control className="mb-3" size="sm" type="text" defaultValue={createCustomer.phone} onChange={(e) => setCreateCustomer({ ...createCustomer, phone: e.target.value })} required />
+                        <Form.Control className="mb-3" size="sm" type="text" defaultValue={createReservation.phone} onChange={(e) => setCreateReservation({ ...createReservation, phone: e.target.value })} required />
                         <Form.Label>Direccíon</Form.Label>
-                        <Form.Control className="mb-3" size="sm" type="text" defaultValue={createCustomer.address} onChange={(e) => setCreateCustomer({ ...createCustomer, address: e.target.value })} required />
+                        <Form.Control className="mb-3" size="sm" type="text" defaultValue={createReservation.address} onChange={(e) => setCreateReservation({ ...createReservation, address: e.target.value })} required />
                         <Form.Label>Ciudad</Form.Label>
-                        <Form.Control className="mb-3" size="sm" type="text" defaultValue={createCustomer.city} onChange={(e) => setCreateCustomer({ ...createCustomer, city: e.target.value })} required />
+                        <Form.Control className="mb-3" size="sm" type="text" defaultValue={createReservation.city} onChange={(e) => setCreateReservation({ ...createReservation, city: e.target.value })} required />
                         <Form.Label>Estado</Form.Label>
-                        <Form.Switch checked={createCustomer.status || false} value={createCustomer.status} onChange={(e) => setCreateCustomer({ ...createCustomer, status: e.target.checked })} />
+                        <Form.Switch checked={createReservation.status || false} value={createReservation.status} onChange={(e) => setCreateReservation({ ...createReservation, status: e.target.checked })} />
                         <br />
                         <Button variant="success" size="sm" type="submit" disabled={creating}>{creating ? 'Guardando...' : 'Guardar'}</Button>{' '}
                         <Button variant="secondary" size="sm" onClick={handleCloseCreate}>Cancelar</Button>{' '}
