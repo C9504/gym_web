@@ -28,6 +28,7 @@ const Reservations = () => {
 
     useEffect(() => {
         getReservations();
+        console.log(initialized);
     }, []);
 
     const getReservations = async () => {
