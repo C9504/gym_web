@@ -35,7 +35,7 @@ const Register = () => {
         event.preventDefault();
         setRegistering(true);
         const toastId = toast.loading("Registrando...", { hideProgressBar: false, position: "bottom-center" });
-        await axios.post(`${apiRequest()}/member/register`, request, { withCredentials: false }).then((res) => {
+        await axios.post(`${apiRequest()}/auth/member/register`, request, { withCredentials: false }).then((res) => {
             if (res.status === 200) {
                 event.target.reset();
                 console.log(initialized);
