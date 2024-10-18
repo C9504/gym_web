@@ -43,6 +43,7 @@ const Profile = () => {
                 toast.update(toastId, { render: "Datos actualizados correctamente", hideProgressBar: true, type: "success", isLoading: false, autoClose: 5000, closeOnClick: true });
 
             }
+            getProfile();
         }).catch((_err) => {
             setUpdating(false);
             toast.update(toastId, { render: "Error: por favor revisa que los datos sean correctos e intenta de nuevo", type: "error", isLoading: false, autoClose: 5000, closeOnClick: true });
@@ -58,8 +59,8 @@ const Profile = () => {
                 setUpdating(false);
                 setExists(true);
                 toast.update(toastId, { render: "Operación realizada con exito", hideProgressBar: true, type: "success", isLoading: false, autoClose: 5000, closeOnClick: true });
-                getProfile();
             }
+            getProfile();
         }).catch((_err) => {
             setUpdating(false);
             toast.update(toastId, { render: "Error: por favor revisa que los datos sean correctos e intenta de nuevo", type: "error", isLoading: false, autoClose: 5000, closeOnClick: true });

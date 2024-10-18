@@ -37,12 +37,12 @@ const Layout = () => {
                             <Nav.Link as={Link} to={"/about-us"}>Nosotros</Nav.Link>
                             <Nav.Link as={Link} to={"/classes"}>Clases</Nav.Link>
                             <Nav.Link href="#portfolio">Horarios</Nav.Link>
-                            {/* <Nav.Link as={Link} to={"/trainers"}>Entrenadores</Nav.Link> */}
+                            <Nav.Link as={Link} to={"/trainers"}>Entrenadores</Nav.Link>
                             {/* <Nav.Link as={Link} to={"/memberships"}>Membresías</Nav.Link> */}
                             {keycloak.hasResourceRole('member') && (
                                 <>
                                     <Nav.Link as={Link} to={"/progress"}>Progreso</Nav.Link>
-                                    <Nav.Link as={Link} to={"/reservations"}>Reservations</Nav.Link>
+                                    <Nav.Link as={Link} to={"/reservations"}>Reservas</Nav.Link>
                                 </>
                             )}
                             <Nav.Link as={Link} to={"/contact"}>Contacto</Nav.Link>
