@@ -47,9 +47,7 @@ const Layout = () => {
                             )}
                             <Nav.Link as={Link} to={"/contact"}>Contacto</Nav.Link>
                             {!keycloak.authenticated && (
-                                <Nav.Item>
-                                    <Button variant="primary" size="sm" onClick={() => register()}>Unirme</Button>
-                                </Nav.Item>
+                                <Nav.Link as={Link} to={"/register"}>Unirme</Nav.Link>
                             )}
                             {keycloak.authenticated && (
                                 <NavDropdown title={<span><i className="bi bi-person-circle text-danger" /> {keycloak?.profile?.firstName}</span>} id="basic-nav-dropdown-settings">

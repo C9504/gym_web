@@ -12,6 +12,7 @@ import About from "./components/public/about";
 import Subscriptions from "./components/private/subscriptions";
 import Profile from "./components/private/profile";
 import { ReactKeycloakProvider, useKeycloak } from "@react-keycloak/web";
+import Register from "./components/public/register";
 
 function Main() {
 
@@ -36,6 +37,7 @@ function Main() {
         <Route path='/contact' element={<Contact />} />
         <Route path='/trainers' element={<Trainers />} />
         <Route path='/classes' element={<Classes />} />
+        <Route path='/register' element={<Register />} />
          {keycloak.hasResourceRole('member') && (
           <>
             <Route path='/subscriptions' element={<Subscriptions />} />
