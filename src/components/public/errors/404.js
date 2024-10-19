@@ -18,7 +18,7 @@ const ErrorPage = () => {
           <p className="mb-4">No te preocupes, ¡puedes volver a entrenar!</p>
           <div className="mb-4">
             <img
-              src="/path-to-your-image/fitness-image.png"
+              src="/icon.png"
               alt="Página no encontrada"
               style={{ maxWidth: '100%', height: 'auto' }}
             />
