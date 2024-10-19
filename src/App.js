@@ -14,6 +14,7 @@ import Profile from "./components/private/profile";
 import { ReactKeycloakProvider, useKeycloak } from "@react-keycloak/web";
 import Register from "./components/public/register";
 import ProtectedRoutes from "./services/middleware";
+import ErrorPage from "./components/public/errors/404";
 
 function Main() {
 
@@ -80,6 +81,7 @@ function Main() {
           <Route path='/profile' element={<Profile />} />
         </Route>
       </Route>
+      <Route path="*" element={<ErrorPage />} />
     </Routes>
   );
 }
