@@ -62,3 +62,57 @@ $secondary: #6c757d;
     padding: 10px 40px;
     font-size: 1.2rem;
 }
+
+/* SUBSCRIPTIONS */
+.plan-card {
+    border-radius: 5px;
+    padding: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .plan-card:hover {
+    transform: translateY(-10px);
+  }
+  
+  .plan-card.selected {
+    border: 2px solid #b00020; /* Cambia el borde cuando el plan esté seleccionado */
+    box-shadow: 0 8px 16px rgba(0, 123, 255, 0.3); /* Resalta el plan seleccionado */
+  }
+  
+  .plan-name {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  .plan-price {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 20px 0;
+  }
+  
+  .plan-features {
+    list-style-type: none;
+    padding: 0;
+    margin-bottom: 20px;
+  }
+  
+  .plan-features li {
+    font-size: 1rem;
+    margin-bottom: 10px;
+  }
+  
+  .available-feature i {
+    color: #28a745; /* Verde para las características disponibles */
+    margin-right: 10px;
+  }
+  
+  .unavailable-feature i {
+    color: #dc3545; /* Rojo para las características no disponibles */
+    margin-right: 10px;
+  }
+  
+  .order-btn {
+    background-color: #b00020; /* Color principal para el botón */
+    border-radius: 50px;
+  }  

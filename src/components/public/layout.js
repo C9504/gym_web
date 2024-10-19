@@ -34,17 +34,20 @@ const Layout = () => {
                     <Navbar.Toggle aria-controls="navbarResponsive" />
                     <Navbar.Collapse id="navbarResponsive">
                         <Nav className="ms-auto my-2 my-lg-0">
+                            <Nav.Link as={Link} to={"/"}>Inicio</Nav.Link>
+                            <Nav.Link as={Link} to={"/plans"}>Programas</Nav.Link>
+                            {keycloak.hasResourceRole('member') && (
+                                <>
+                                    <Nav.Link as={Link} to={"/progress"}>Progreso</Nav.Link>                                    
+                                    {/* <Nav.Link as={Link} to={"/reservations"}>Reservas</Nav.Link> */}
+                                    <Nav.Link as={Link} to={"/subscriptions"}>Suscripciones</Nav.Link>
+                                </>
+                            )}
                             <Nav.Link as={Link} to={"/about-us"}>Nosotros</Nav.Link>
                             <Nav.Link as={Link} to={"/classes"}>Clases</Nav.Link>
                             <Nav.Link href="#portfolio">Horarios</Nav.Link>
                             <Nav.Link as={Link} to={"/trainers"}>Entrenadores</Nav.Link>
                             {/* <Nav.Link as={Link} to={"/memberships"}>Membresías</Nav.Link> */}
-                            {keycloak.hasResourceRole('member') && (
-                                <>
-                                    <Nav.Link as={Link} to={"/progress"}>Progreso</Nav.Link>
-                                    <Nav.Link as={Link} to={"/reservations"}>Reservas</Nav.Link>
-                                </>
-                            )}
                             <Nav.Link as={Link} to={"/contact"}>Contacto</Nav.Link>
                             {!keycloak.authenticated && (
                                 <Nav.Link as={Link} to={"/register"}>Unirme</Nav.Link>

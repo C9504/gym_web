@@ -49,7 +49,9 @@ const Welcome = () => {
                             </div>
                         </Carousel.Item>
                     </Carousel>
-                    <Button variant='primary' onClick={() => keycloak.login({ redirectUri: window.location.origin, locale: 'es-ES' })} size="lg">INGRESAR</Button>
+                    {!keycloak.authenticated && (
+                        <Button variant='primary' onClick={() => keycloak.login({ redirectUri: window.location.origin, locale: 'es-ES' })} size="lg">INGRESAR</Button>
+                    )}
                 </Container>
             </div>
             <Container className="mb-5">

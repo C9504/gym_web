@@ -7,7 +7,6 @@ import Progress from "./components/private/progress";
 import Contact from "./components/public/contact";
 import Classes from "./components/public/classes";
 import Trainers from "./components/public/trainers";
-import Reservations from "./components/private/reservations";
 import About from "./components/public/about";
 import Subscriptions from "./components/private/subscriptions";
 import Profile from "./components/private/profile";
@@ -15,6 +14,7 @@ import { ReactKeycloakProvider, useKeycloak } from "@react-keycloak/web";
 import Register from "./components/public/register";
 import ProtectedRoutes from "./services/middleware";
 import ErrorPage from "./components/public/errors/404";
+import Plan from "./components/private/plans";
 
 function Main() {
 
@@ -69,11 +69,13 @@ function Main() {
         <Route path='/trainers' element={<Trainers />} />
         <Route path='/classes' element={<Classes />} />
         <Route path='/register' element={<Register />} />
-         {/* Agrupando las rutas protegidas para miembros */}
+
+        <Route path='/plans' element={<Plan />} />
+        {/* Agrupando las rutas protegidas para miembros */}
         <Route element={<ProtectedRoutes role='member' />}>
           <Route path='/subscriptions' element={<Subscriptions />} />
           <Route path='/progress' element={<Progress />} />
-          <Route path='/reservations' element={<Reservations />} />
+          {/* <Route path='/reservations' element={<Reservations />} /> */}
         </Route>
 
         {/* Agrupando las rutas para cualquier usuario autenticado */}
