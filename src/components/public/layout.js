@@ -1,7 +1,7 @@
 import { useKeycloak } from "@react-keycloak/web";
 import { useEffect } from "react";
 import { Link, Outlet } from "react-router-dom";
-import { Button, Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
+import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
 
 const Layout = () => {
 
@@ -16,10 +16,6 @@ const Layout = () => {
             console.log(keycloak.hasResourceRole('member'));
         }
     }, [initialized]);
-
-    const register = async() => {
-        window.location.href = await keycloak.createRegisterUrl({ redirectUri: window.location.origin, locale: 'es-ES' });
-    };
 
     return (
         <>
@@ -38,19 +34,19 @@ const Layout = () => {
                             <Nav.Link as={Link} to={"/plans"}>Programas</Nav.Link>
                             {keycloak.hasResourceRole('member') && (
                                 <>
-                                    <Nav.Link as={Link} to={"/progress"}>Progreso</Nav.Link>                                    
+                                    {/* <Nav.Link as={Link} to={"/progress"}>Progreso</Nav.Link> */}
                                     {/* <Nav.Link as={Link} to={"/reservations"}>Reservas</Nav.Link> */}
                                     <Nav.Link as={Link} to={"/subscriptions"}>Suscripciones</Nav.Link>
                                 </>
                             )}
                             <Nav.Link as={Link} to={"/about-us"}>Nosotros</Nav.Link>
                             <Nav.Link as={Link} to={"/classes"}>Clases</Nav.Link>
-                            <Nav.Link href="#portfolio">Horarios</Nav.Link>
-                            <Nav.Link as={Link} to={"/trainers"}>Entrenadores</Nav.Link>
+                            {/* <Nav.Link href="#portfolio">Horarios</Nav.Link> */}
+                            {/* <Nav.Link as={Link} to={"/trainers"}>Entrenadores</Nav.Link> */}
                             {/* <Nav.Link as={Link} to={"/memberships"}>Membresías</Nav.Link> */}
                             <Nav.Link as={Link} to={"/contact"}>Contacto</Nav.Link>
                             {!keycloak.authenticated && (
-                                <Nav.Link as={Link} to={"/register"}>Unirme</Nav.Link>
+                                <Nav.Link as={Link} to={"/register"} className="btn bg-primary text-white">Unirme</Nav.Link>
                             )}
                             {keycloak.authenticated && (
                                 <NavDropdown title={<span><i className="bi bi-person-circle text-danger" /> {keycloak?.profile?.firstName}</span>} id="basic-nav-dropdown-settings">

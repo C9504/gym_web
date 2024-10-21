@@ -34,6 +34,9 @@ const Plan = () => {
 
     const handleSelectPlan = (id) => {
         setSelectedPlan(id); // Actualiza el plan seleccionado
+        if (!keycloak.authenticated) {
+            keycloak.login();
+        }
     };
 
     const handleNextStep = () => {
@@ -68,7 +71,7 @@ const Plan = () => {
     };
 
     const getPlans = async () => {
-        await axios.get(`${apiRequest()}/subscriptions/plans`, { headers: { Authorization: `Bearer ${keycloak.token}` }, withCredentials: false }).then((res) => {
+        await axios.get(`${apiRequest()}/plans`, { /*headers: { Authorization: `Bearer ${keycloak.token}` },*/ withCredentials: false }).then((res) => {
             setPlans(res.data);
             console.log(initialized);
         }).catch((error) => {

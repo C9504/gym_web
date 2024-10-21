@@ -10,7 +10,7 @@ const Classes = () => {
                         <h2 className="text-center mt-0">Clases para Todos los Niveles!</h2>
                         <hr className="divider divider-light" />
                         <p className="text-darked text-75 mb-4">Disfruta de una variedad de entrenamientos diseñados para todas las etapas de tu viaje fitness, desde sesiones de yoga relajante para la flexibilidad y el equilibrio, hasta entrenamientos de alta intensidad para quienes buscan desafiar sus límites.</p>
-                        <a className="btn btn-primary btn-xl" href="#services">Reservar ahora!</a>
+                        {/* <a className="btn btn-primary btn-xl" href="#services">Reservar ahora!</a> */}
                     </div>
                 </div>
                 <div className="row gx-4 gx-lg-5">
