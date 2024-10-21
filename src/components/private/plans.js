@@ -5,6 +5,7 @@ import { Button, Card, Col, Container, Form, Row, ProgressBar } from "react-boot
 import { apiRequest } from "../../services/config";
 import { toast, ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import moment from "moment";
 
 const Plan = () => {
 
@@ -20,10 +21,9 @@ const Plan = () => {
         member: {
             id: ''
         },
-        startDate: '',
+        startDate: moment().add(1, 'days').format('YYYY-MM-DD 07:00'),
         endDate: '',
     });
-    const [paymentMethod, setPaymentMethod] = useState('');
     const [currentStep, setCurrentStep] = useState(1);
 
     useEffect(() => {
@@ -82,7 +82,6 @@ const Plan = () => {
     const getProfile = async () => {
         await axios.get(`${apiRequest()}/members/me`, { headers: { Authorization: `Bearer ${keycloak.token}` }, withCredentials: false }).then((res) => {
             setMember(res.data);
-            console.log(res.data);
         }).catch((error) => {
             console.log(error?.response?.status);
         });
@@ -116,20 +115,22 @@ const Plan = () => {
                                         <div className="plan-price">
                                             {plan?.price?.toLocaleString('es-ES', { style: 'currency', currency: 'COP' })}<sub>/{plan.duration}</sub>
                                         </div>
-                                        <ul className="plan-features">
-                                            {plan.description.split(';').map((feature, index) => (
-                                                <li key={index} className="available-feature text-start">
-                                                    <i className="bi bi-check-circle-fill"></i> {feature}
-                                                </li>
-                                            ))}
-                                        </ul>
+                                        {plan.id === selectedPlan && (
+                                            <ul className="plan-features">
+                                                {plan.description.split(';').map((feature, index) => (
+                                                    <li key={index} className="available-feature text-start">
+                                                        <i className="bi bi-check-circle-fill"></i> {feature}
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        )}
                                         {selectedPlan === plan.id ? (
-                                            <Button variant="primary shadow" size="lg" className="order-btn mt-3" disabled>
+                                            <Button variant="primary shadow" size="sm" className="order-btn mt-3" disabled>
                                                 <i className="bi bi-check-circle-fill"></i>{' '}
                                                 Seleccionado
                                             </Button>
                                         ) : (
-                                            <Button variant="primary shadow" size="lg" className="order-btn mt-3">
+                                            <Button variant="primary shadow" size="sm" className="order-btn mt-3">
                                                 Seleccionar
                                             </Button>
                                         )}
@@ -156,6 +157,7 @@ const Plan = () => {
                     <Row>
                         <Col>
                             <h2>Selecciona tu horario</h2>
+                            <p className="text-white">Esta fecha y hora es la hora de inicio diaria de tu rutina (este será el horario de todos los dias)</p>
                         </Col>
                     </Row>
                     <Row>
@@ -163,9 +165,12 @@ const Plan = () => {
                             <Col xs={12} md={6}>
                                 <Form.Label>Fecha de inicio</Form.Label>
                                 <Form.Control
+                                    min={moment().format('YYYY-MM-DD HH:mm A')}
                                     type="datetime-local"
                                     value={subscription?.startDate}
-                                    onChange={(e) => setSubscription({ ...subscription, startDate: e.target.value })}
+                                    onChange={(e) =>  { 
+                                        setSubscription({ ...subscription, startDate: e.target.value, endDate: moment(e.target.value).add(1.5, 'hours').format('YYYY-MM-DD HH:mm') })
+                                    }}
                                 />
                             </Col>
                             <Col xs={12} md={6}>
@@ -174,6 +179,7 @@ const Plan = () => {
                                     type="datetime-local"
                                     value={subscription?.endDate}
                                     onChange={(e) => setSubscription({ ...subscription, endDate: e.target.value })}
+                                    readOnly
                                 />
                             </Col>
                         </Form>

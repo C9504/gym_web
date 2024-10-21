@@ -50,8 +50,8 @@ const Subscriptions = () => {
                                     <td>{index + 1}</td>
                                     <td>{subscription?.plan?.name}</td>
                                     <td>{subscription?.plan?.duration}</td>
-                                    <td>{moment(subscription.startDate).tz('America/Bogota').format('D [de] MMMM [de] YYYY')}</td>
-                                    <td>{moment(subscription?.endDate).tz('America/Bogota').format('D [de] MMMM [de] YYYY')}</td>
+                                    <td>{moment(subscription.startDate).tz('America/Bogota').format('D [de] MMMM [de] YYYY [a las] HH:mm A')}</td>
+                                    <td>{moment(subscription?.endDate).tz('America/Bogota').format('D [de] MMMM [de] YYYY [a las] HH:mm A')}</td>
                                     <td>{subscription?.status}</td>
                                 </tr>
                             ))}
