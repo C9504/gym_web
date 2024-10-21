@@ -6,7 +6,6 @@ import Welcome from "./components/public/welcome";
 import Progress from "./components/private/progress";
 import Contact from "./components/public/contact";
 import Classes from "./components/public/classes";
-import Trainers from "./components/public/trainers";
 import About from "./components/public/about";
 import Subscriptions from "./components/private/subscriptions";
 import Profile from "./components/private/profile";
@@ -15,6 +14,8 @@ import Register from "./components/public/register";
 import ProtectedRoutes from "./services/middleware";
 import ErrorPage from "./components/public/errors/404";
 import Plan from "./components/private/plans";
+import ListMembers from "./components/private/members/list";
+import ListTrainers from "./components/private/trainers/list";
 
 function Main() {
 
@@ -66,7 +67,7 @@ function Main() {
         <Route index element={<Welcome />} />
         <Route path='/about-us' element={<About />} />
         <Route path='/contact' element={<Contact />} />
-        <Route path='/trainers' element={<Trainers />} />
+        {/* <Route path='/trainers' element={<Trainers />} /> */}
         <Route path='/classes' element={<Classes />} />
         <Route path='/register' element={<Register />} />
 
@@ -81,6 +82,13 @@ function Main() {
         {/* Agrupando las rutas para cualquier usuario autenticado */}
         <Route element={<ProtectedRoutes />}>
           <Route path='/profile' element={<Profile />} />
+        </Route>
+
+        {/* Agrupando las rutas protegidas para administradores */}
+        <Route element={<ProtectedRoutes role='admin' />}>
+          <Route path='/members' element={<ListMembers />} />
+          <Route path='/trainers' element={<ListTrainers />} />
+          {/* <Route path='/reservations' element={<Reservations />} /> */}
         </Route>
       </Route>
       <Route path="*" element={<ErrorPage />} />

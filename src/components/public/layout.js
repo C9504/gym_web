@@ -32,6 +32,13 @@ const Layout = () => {
                         <Nav className="ms-auto my-2 my-lg-0">
                             <Nav.Link as={Link} to={"/"}>Inicio</Nav.Link>
                             <Nav.Link as={Link} to={"/plans"}>Programas</Nav.Link>
+                            {keycloak.hasResourceRole('admin') && (
+                                <>
+                                    {/* <Nav.Link as={Link} to={"/progress"}>Progreso</Nav.Link> */}
+                                    <Nav.Link as={Link} to={"/members"}>Members</Nav.Link>
+                                    <Nav.Link as={Link} to={"/trainers"}>Trainers</Nav.Link>
+                                </>
+                            )}
                             {keycloak.hasResourceRole('member') && (
                                 <>
                                     {/* <Nav.Link as={Link} to={"/progress"}>Progreso</Nav.Link> */}

@@ -1,6 +1,6 @@
+import React, { useEffect, useState } from "react";
 import { useKeycloak } from "@react-keycloak/web";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
 import { Button, Card, Col, Container, Form, Row, ProgressBar } from "react-bootstrap";
 import { apiRequest } from "../../services/config";
 import { toast, ToastContainer } from "react-toastify";
@@ -37,6 +37,7 @@ const Plan = () => {
         if (!keycloak.authenticated) {
             keycloak.login();
         }
+        handleNextStep();
     };
 
     const handleNextStep = () => {
@@ -169,7 +170,7 @@ const Plan = () => {
                                     type="datetime-local"
                                     value={subscription?.startDate}
                                     onChange={(e) =>  { 
-                                        setSubscription({ ...subscription, startDate: e.target.value, endDate: moment(e.target.value).add(1.5, 'hours').format('YYYY-MM-DD HH:mm') })
+                                        setSubscription({ ...subscription, startDate: e.target.value, endDate: moment(e.target.value).add(1.5, 'hours').format('YYYY-MM-DDTHH:mm') })
                                     }}
                                 />
                             </Col>
