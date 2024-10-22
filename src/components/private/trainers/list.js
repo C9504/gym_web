@@ -37,9 +37,10 @@ const ListTrainers = () => {
     };
 
     const handleEditTrainer = (trainer) => {
+        setNewTrainer(false);
         setTrainer(trainer);
         setUpdated(false);
-        setUpdateTrainer(!newTrainer);
+        setUpdateTrainer(!updateTrainer);
     };
 
     const getAllTrainers = async () => {

@@ -35,8 +35,8 @@ const Layout = () => {
                             {keycloak.hasResourceRole('admin') && (
                                 <>
                                     {/* <Nav.Link as={Link} to={"/progress"}>Progreso</Nav.Link> */}
-                                    <Nav.Link as={Link} to={"/members"}>Members</Nav.Link>
-                                    <Nav.Link as={Link} to={"/trainers"}>Trainers</Nav.Link>
+                                    <Nav.Link as={Link} to={"/members"}>Miembros</Nav.Link>
+                                    <Nav.Link as={Link} to={"/trainers"}>Entrenadores</Nav.Link>
                                 </>
                             )}
                             {keycloak.hasResourceRole('member') && (
