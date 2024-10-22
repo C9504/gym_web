@@ -5,7 +5,7 @@ import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import moment from "moment-timezone";
 import { apiRequest } from "../../../services/config";
 
-const CreateMembers = ({ setNew, setSaved, setFinished, setMessage }) => {
+const CreateMembers = ({ setNew, setSaved, setFinished, setMessage, setType }) => {
 
     const { keycloak, initialized } = useKeycloak();
     const [newData, setNewData] = useState({});
@@ -18,24 +18,24 @@ const CreateMembers = ({ setNew, setSaved, setFinished, setMessage }) => {
     const saveData = async (event) => {
         event.preventDefault();
         setSaving(true);
-        await axios.post(`${apiRequest()}/members/register`, newData, { headers: { Authorization: `Bearer ${keycloak.token}` }, withCredentials: false }).then((res) => {
+        await axios.post(`http://localhost:8091/members/register`, newData, { headers: { Authorization: `Bearer ${keycloak.token}` }, withCredentials: false }).then((res) => {
             event.target.reset();
             setSaving(false);
             setSaved(true);
             setNew(false);
             setFinished(true);
+            setType("success");
             setMessage("Miembro guardado correctamente");
         }).catch((err) => {
-            console.log(err?.response);
-            if (err?.response?.status === 409) {
-                setMessage("El usuario ya existe");
-                setSaving(false);
-            }
+            setType("danger");
+            setMessage(err?.response?.data);
+            setSaving(false);
+            setSaved(true);
         });
     };
 
     return (
-        <Container>
+        <Container className="mb-3">
             <Form onSubmit={saveData}>
                 <h3 className="mb-3">Datos de contacto</h3>
                 <Row className="mb-3">

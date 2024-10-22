@@ -17,6 +17,7 @@ const ListMembers = () => {
     const [saved, setSaved] = useState(false);
     const [updated, setUpdated] = useState(false);
     const [message, setMessage] = useState("Message here");
+    const [type, setType] = useState("success");
     const [finished, setFinished] = useState(false);
 
     useEffect(() => {
@@ -41,11 +42,13 @@ const ListMembers = () => {
         setData(data);
         setUpdated(false);
         setUpdate(true);
+        setSaved(false);
     };
 
     const getAll = async () => {
         await axios.get(`${apiRequest()}/members`, { headers: { Authorization: `Bearer ${keycloak.token}` }, withCredentials: false }).then((res) => {
             setList(res.data);
+            setFinished(false);
             console.log(initialized);
         }).catch((error) => {
             console.log(error?.response?.status);
@@ -69,12 +72,12 @@ const ListMembers = () => {
             <Row className="mb-3">
                 <Col>
                     {newData && (
-                        <CreateMembers setNew={setNewData} setSaved={setSaved} setFinished={setFinished} setMessage={setMessage} />
+                        <CreateMembers setNew={setNewData} setSaved={setSaved} setFinished={setFinished} setMessage={setMessage} setType={setType}/>
                     )}
                     {update && (
-                        <EditMember setUpdate={setUpdate} setUpdated={setUpdated} setFinished={setFinished} data={data} setMessage={setMessage} />
+                        <EditMember setUpdate={setUpdate} setUpdated={setUpdated} setFinished={setFinished} data={data} setMessage={setMessage} setType={setType} />
                     )}
-                    <Alert variant="success" show={saved} onClose={() => setSaved(!saved)} dismissible>
+                    <Alert variant={type} show={saved} onClose={() => setSaved(!saved)} dismissible>
                         {message}
                     </Alert>
                     <Alert variant="success" show={updated} onClose={() => setUpdated(!updated)} dismissible>
@@ -88,11 +91,13 @@ const ListMembers = () => {
                         <thead>
                             <tr>
                                 <th>#</th>
+                                <th>Subject</th>
                                 <th>Identificación</th>
                                 <th>Nombre</th>
                                 <th>Apellidos</th>
-                                <th>Inicio</th>
-                                <th>Finalización</th>
+                                <th>Email</th>
+                                <th>Telefono</th>
+                                <th>Fecha de Registro</th>
                                 <th>Estado</th>
                                 <th>Acciones</th>
                             </tr>
@@ -101,10 +106,12 @@ const ListMembers = () => {
                             {list.map((data, index) => (
                                 <tr key={data.id}>
                                     <td>{index + 1}</td>
+                                    <td>{data?.subject}</td>
                                     <td>{data?.documentNumber}</td>
                                     <td>{data?.name}</td>
                                     <td>{data?.lastName}</td>
-                                    <td>{moment(data?.bithDate).tz('America/Bogota').format('D [de] MMMM [de] YYYY')}</td>
+                                    <td>{data?.email}</td>
+                                    <td>{data?.phone}</td>
                                     <td>{moment(data?.joinDate).tz('America/Bogota').format('D [de] MMMM [de] YYYY')}</td>
                                     <td>{data?.status}</td>
                                     <td>

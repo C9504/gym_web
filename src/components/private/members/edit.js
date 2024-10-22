@@ -5,7 +5,7 @@ import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import moment from "moment-timezone";
 import { apiRequest } from "../../../services/config";
 
-const EditMember = ({ setUpdate, setUpdated, setFinished, data, setMessage }) => {
+const EditMember = ({ setUpdate, setUpdated, setFinished, data, setMessage, setType }) => {
 
     const { keycloak, initialized } = useKeycloak();
     const [request, setRequest] = useState(data);
@@ -23,13 +23,16 @@ const EditMember = ({ setUpdate, setUpdated, setFinished, data, setMessage }) =>
         setUpdating(true);
         await axios.put(`${apiRequest()}/members/${request?.id}`, request, { headers: { Authorization: `Bearer ${keycloak.token}` }, withCredentials: false }).then((res) => {
             event.target.reset();
+            setType("success");
             setMessage("Miembro actualizado correctamente");
             setUpdated(true);
             setUpdating(false);
             setUpdate(false);
             setFinished(true);
-        }).catch((_err) => {
-            setMessage("Error: por favor revisa que los datos sean correctos e intenta de nuevo");
+        }).catch((err) => {
+            setUpdated(true);
+            setType("danger");
+            setMessage(err?.response?.data);
             setUpdating(false);
         });
     };
@@ -61,7 +64,7 @@ const EditMember = ({ setUpdate, setUpdated, setFinished, data, setMessage }) =>
                 <Row className="mb-3">
                     <Col xs="12" md="4">
                         <Form.Label><span className="text-danger">*</span> Email</Form.Label>
-                        <Form.Control type="email" size="sm" value={request?.email || ''} onChange={(e) => setRequest({ ...request, email: e.target.value })} placeholder="Email" disabled={updating} required />
+                        <Form.Control type="email" size="sm" value={request?.email || ''} onChange={(e) => setRequest({ ...request, email: e.target.value })} placeholder="Email" readOnly={keycloak?.profile?.email ? false : true} disabled={updating} required />
                     </Col>
                     <Col xs="12" md="4">
                         <Form.Label><span className="text-danger">*</span> Genero</Form.Label>
