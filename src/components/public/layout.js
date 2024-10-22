@@ -57,7 +57,9 @@ const Layout = () => {
                             )}
                             {keycloak.authenticated && (
                                 <NavDropdown title={<span><i className="bi bi-person-circle text-danger" /> {keycloak?.profile?.firstName}</span>} id="basic-nav-dropdown-settings">
-                                    <NavDropdown.Item as={Link} to={"/profile"}><i className="bi bi-person text-danger"></i> Perfil</NavDropdown.Item>
+                                    {!keycloak.hasResourceRole('admin') && (
+                                        <NavDropdown.Item as={Link} to={"/profile"}><i className="bi bi-person text-danger"></i> Perfil</NavDropdown.Item>
+                                    )}
                                     <NavDropdown.Item onClick={() => keycloak.logout({ redirectUri: `${window.location.origin}` })}><i className="bi bi-x-lg text-danger"></i> Cerrar sesión</NavDropdown.Item>
                                 </NavDropdown>
                             )}

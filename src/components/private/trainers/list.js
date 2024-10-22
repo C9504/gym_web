@@ -58,7 +58,7 @@ const ListTrainers = () => {
         <Container>
             <Row>
                 <Col>
-                    <h1 className="mt-5 mb-3">Trainers</h1>
+                    <h1 className="mt-5 mb-3">Entrenadores</h1>
                 </Col>
             </Row>
             <Row>
