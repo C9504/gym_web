@@ -18,7 +18,7 @@ const CreateTrainers = ({ setNew, setSaved, setFinished, setMessage, setType }) 
     const saveData = async (event) => {
         event.preventDefault();
         setSaving(true);
-        await axios.post(`http://localhost:8092/trainers/register`, newData, { headers: { Authorization: `Bearer ${keycloak.token}` }, withCredentials: false }).then((res) => {
+        await axios.post(`${apiRequest()}/trainers/register`, newData, { headers: { Authorization: `Bearer ${keycloak.token}` }, withCredentials: false }).then((res) => {
             event.target.reset();
             setSaving(false);
             setSaved(true);

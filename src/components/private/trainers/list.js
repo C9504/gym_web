@@ -46,7 +46,7 @@ const ListTrainers = () => {
     };
 
     const getAll = async () => {
-        await axios.get(`http://localhost:8092/trainers`, { headers: { Authorization: `Bearer ${keycloak.token}` }, withCredentials: false }).then((res) => {
+        await axios.get(`${apiRequest()}/trainers`, { headers: { Authorization: `Bearer ${keycloak.token}` }, withCredentials: false }).then((res) => {
             setList(res.data);
             console.log(initialized);
         }).catch((error) => {

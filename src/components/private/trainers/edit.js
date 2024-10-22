@@ -21,7 +21,7 @@ const EditTrainer = ({ setUpdate, setUpdated, setFinished, data, setMessage, set
     const saveTrainer = async (event) => {
         event.preventDefault();
         setUpdating(true);
-        await axios.put(`http://localhost:8092/trainers/${request?.id}`, request, { headers: { Authorization: `Bearer ${keycloak.token}` }, withCredentials: false }).then((res) => {
+        await axios.put(`${apiRequest()}/trainers/${request?.id}`, request, { headers: { Authorization: `Bearer ${keycloak.token}` }, withCredentials: false }).then((res) => {
             event.target.reset();
             setType("success");
             setMessage("Trainer actualizado correctamente");
