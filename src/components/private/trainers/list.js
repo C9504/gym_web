@@ -10,42 +10,44 @@ import EditTrainer from "./edit";
 const ListTrainers = () => {
 
     const { keycloak, initialized } = useKeycloak();
-    const [allTrainers, setAllTrainers] = useState([]);
-    const [newTrainer, setNewTrainer] = useState(false);
-    const [updateTrainer, setUpdateTrainer] = useState(false);
-    const [trainer, setTrainer] = useState({});
+    const [list, setList] = useState([]);
+    const [newData, setNewData] = useState(false);
+    const [update, setUpdate] = useState(false);
+    const [data, setData] = useState({});
     const [saved, setSaved] = useState(false);
     const [updated, setUpdated] = useState(false);
     const [message, setMessage] = useState("Message here");
+    const [type, setType] = useState("success");
     const [finished, setFinished] = useState(false);
 
     useEffect(() => {
-        getAllTrainers();
+        getAll();
     }, []);
 
     useEffect(() => {
         if(finished) {
-            getAllTrainers();
+            getAll();
         }
     }, [finished]);
 
-    const handleNewTrainer = () => { 
-        setNewTrainer(!newTrainer); 
-        setUpdateTrainer(false); 
+    const handleNew = () => { 
+        setNewData(!newData); 
+        setUpdate(false); 
         setUpdated(false); 
         setSaved(false);
     };
 
-    const handleEditTrainer = (trainer) => {
-        setNewTrainer(false);
-        setTrainer(trainer);
+    const handleEdit = (data) => {
+        setNewData(false);
+        setData(data);
         setUpdated(false);
-        setUpdateTrainer(!updateTrainer);
+        setUpdate(true);
+        setSaved(false);
     };
 
-    const getAllTrainers = async () => {
-        await axios.get(`${apiRequest()}/trainers`, { headers: { Authorization: `Bearer ${keycloak.token}` }, withCredentials: false }).then((res) => {
-            setAllTrainers(res.data);
+    const getAll = async () => {
+        await axios.get(`http://localhost:8092/trainers`, { headers: { Authorization: `Bearer ${keycloak.token}` }, withCredentials: false }).then((res) => {
+            setList(res.data);
             console.log(initialized);
         }).catch((error) => {
             console.log(error?.response?.status);
@@ -61,23 +63,23 @@ const ListTrainers = () => {
             </Row>
             <Row>
                 <Col>
-                    <Button className="float-end align-self-center mb-3" variant="primary" size="sm" onClick={handleNewTrainer}>
-                        {newTrainer ? "Cancelar" : "Nuevo Entrenador"}
+                    <Button className="float-end align-self-center mb-3" variant="primary" size="sm" onClick={handleNew}>
+                        {newData ? "Cancelar" : "Nuevo Entrenador"}
                     </Button>
                 </Col>
             </Row>
             <Row className="mb-3">
                 <Col>
-                    {newTrainer && (
-                        <CreateTrainers setNewTrainer={setNewTrainer} setSaved={setSaved} setFinished={setFinished} setMessage={setMessage} />
+                    {newData && (
+                        <CreateTrainers setNew={setNewData} setSaved={setSaved} setFinished={setFinished} setMessage={setMessage} setType={setType} />
                     )}
-                    {updateTrainer && (
-                        <EditTrainer setUpdateTrainer={setUpdateTrainer} setUpdated={setUpdated} setFinished={setFinished} trainer={trainer} setMessage={setMessage} />
+                    {update && (
+                        <EditTrainer setUpdate={setUpdate} setUpdated={setUpdated} setFinished={setFinished} data={data} setMessage={setMessage} setType={setType} />
                     )}
-                    <Alert variant="success" show={saved} onClose={() => setSaved(!saved)} dismissible>
+                    <Alert variant={type} show={saved} onClose={() => setSaved(!saved)} dismissible>
                         {message}
                     </Alert>
-                    <Alert variant="success" show={updated} onClose={() => setUpdated(!updated)} dismissible>
+                    <Alert variant={type} show={updated} onClose={() => setUpdated(!updated)} dismissible>
                         {message}
                     </Alert>
                 </Col>
@@ -88,25 +90,33 @@ const ListTrainers = () => {
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Plan</th>
-                                <th>Duración</th>
-                                <th>Inicio</th>
-                                <th>Finalización</th>
-                                <th>Estado</th>
+                                <th>Subject</th>
+                                <th>Identificación</th>
+                                <th>Nombre</th>
+                                <th>Apellidos</th>
+                                <th>Genero</th>
+                                <th>Email</th>
+                                <th>Telefono</th>
+                                <th>Especialidad</th>
+                                <th>Fecha de contratación</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {allTrainers.map((trainer, index) => (
+                            {list.map((trainer, index) => (
                                 <tr key={trainer.id}>
                                     <td>{index + 1}</td>
+                                    <td>{trainer?.subject}</td>
+                                    <td>{trainer?.documentNumber}</td>
                                     <td>{trainer?.name}</td>
                                     <td>{trainer?.lastName}</td>
-                                    <td>{moment(trainer.startDate).tz('America/Bogota').format('D [de] MMMM [de] YYYY [a las] HH:mm A')}</td>
-                                    <td>{moment(trainer?.endDate).tz('America/Bogota').format('D [de] MMMM [de] YYYY [a las] HH:mm A')}</td>
-                                    <td>{trainer?.status}</td>
+                                    <td>{trainer?.gender}</td>
+                                    <td>{trainer?.email}</td>
+                                    <td>{trainer?.phone}</td>
+                                    <td>{trainer?.specialty}</td>
+                                    <td>{moment(trainer?.hireDate).tz('America/Bogota').format('D [de] MMMM [de] YYYY')}</td>
                                     <td>
-                                        <Button variant="warning" size="sm" onClick={() => handleEditTrainer(trainer)}>
+                                        <Button variant="warning" size="sm" onClick={() => handleEdit(trainer)}>
                                             Editar
                                         </Button>
                                     </td>

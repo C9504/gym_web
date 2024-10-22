@@ -2,63 +2,64 @@ import React, { useEffect, useState } from "react";
 import { useKeycloak } from "@react-keycloak/web";
 import axios from "axios";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
-import { toast } from "react-toastify";
 import moment from "moment-timezone";
 import { apiRequest } from "../../../services/config";
 
-const CreateTrainers = ({ setNewTrainer, setSaved, setFinished, setMessage }) => {
+const CreateTrainers = ({ setNew, setSaved, setFinished, setMessage, setType }) => {
 
     const { keycloak, initialized } = useKeycloak();
-    const [trainer, setTrainer] = useState({});
+    const [newData, setTrainer] = useState({});
     const [saving, setSaving] = useState(false);
 
     useEffect(() => {
         console.log(initialized);
     }, []);
 
-    const saveTrainer = async (event) => {
+    const saveData = async (event) => {
         event.preventDefault();
         setSaving(true);
-        const toastId = toast.loading("Guardando...", { hideProgressBar: false, position: "bottom-center" });
-        await axios.post(`${apiRequest()}/trainers`, trainer, { headers: { Authorization: `Bearer ${keycloak.token}` }, withCredentials: false }).then((res) => {
+        await axios.post(`http://localhost:8092/trainers/register`, newData, { headers: { Authorization: `Bearer ${keycloak.token}` }, withCredentials: false }).then((res) => {
             event.target.reset();
             setSaving(false);
             setSaved(true);
-            setNewTrainer(false);
+            setNew(false);
             setFinished(true);
+            setType("success");
             setMessage("Trainer guardado correctamente");
-        }).catch((_err) => {
+        }).catch((err) => {
+            setType("danger");
+            setMessage(err?.response?.data);
             setSaving(false);
-            toast.update(toastId, { render: "Error: por favor revisa que los datos sean correctos e intenta de nuevo", type: "error", isLoading: false, autoClose: 5000, closeOnClick: true });
+            setSaved(true);
         });
     };
 
     return (
         <Container>
-            <Form onSubmit={saveTrainer}>
+            <Form onSubmit={saveData}>
                 <h3 className="mb-3">Datos de contacto</h3>
                 <Row className="mb-3">
                     <Col xs="12" md="4">
                         <Form.Label><span className="text-danger">*</span> Identificación</Form.Label>
-                        <Form.Control type="text" pattern="[0-9]*" size="sm" defaultValue={trainer?.documentNumber} onChange={(e) => setTrainer({ ...trainer, documentNumber: e.target.value })} minLength={8} placeholder="Identificación" disabled={saving} required />
+                        <Form.Control type="text" pattern="[0-9]*" size="sm" defaultValue={newData?.documentNumber} onChange={(e) => setTrainer({ ...newData, documentNumber: e.target.value })} minLength={8} placeholder="Identificación" disabled={saving} required />
                     </Col>
                     <Col xs="12" md="4">
                         <Form.Label><span className="text-danger">*</span> Nombre</Form.Label>
-                        <Form.Control type="text" size="sm" defaultValue={trainer?.name} onChange={(e) => setTrainer({ ...trainer, name: e.target.value })} placeholder="Nombre" disabled={saving} required />
+                        <Form.Control type="text" size="sm" defaultValue={newData?.name} onChange={(e) => setTrainer({ ...newData, name: e.target.value })} placeholder="Nombre" disabled={saving} required />
                     </Col>
                     <Col xs="12" md="4">
                         <Form.Label><span className="text-danger">*</span> Apellidos</Form.Label>
-                        <Form.Control type="text" size="sm" defaultValue={trainer?.lastName} onChange={(e) => setTrainer({ ...trainer, lastName: e.target.value })} placeholder="Apellidos" disabled={saving} required />
+                        <Form.Control type="text" size="sm" defaultValue={newData?.lastName} onChange={(e) => setTrainer({ ...newData, lastName: e.target.value })} placeholder="Apellidos" disabled={saving} required />
                     </Col>
                 </Row>
                 <Row className="mb-3">
                     <Col xs="12" md="4">
                         <Form.Label><span className="text-danger">*</span> Email</Form.Label>
-                        <Form.Control type="email" size="sm" defaultValue={trainer?.email} onChange={(e) => setTrainer({ ...trainer, email: e.target.value })} placeholder="Email" disabled={saving} required />
+                        <Form.Control type="email" size="sm" defaultValue={newData?.email} onChange={(e) => setTrainer({ ...newData, email: e.target.value })} placeholder="Email" disabled={saving} required />
                     </Col>
                     <Col xs="12" md="4">
                         <Form.Label><span className="text-danger">*</span> Genero</Form.Label>
-                        <Form.Select size="sm" value={trainer?.gender} onChange={(e) => setTrainer({ ...trainer, gender: e.target.value })} disabled={saving} required >
+                        <Form.Select size="sm" value={newData?.gender} onChange={(e) => setTrainer({ ...newData, gender: e.target.value })} disabled={saving} required >
                             <option value="">Seleccione</option>
                             <option value="HOMBRE">HOMBRE</option>
                             <option value="MUJER">MUJER</option>
@@ -66,17 +67,17 @@ const CreateTrainers = ({ setNewTrainer, setSaved, setFinished, setMessage }) =>
                     </Col>
                     <Col xs="12" md="4">
                         <Form.Label><span className="text-danger">*</span> Telefono</Form.Label>
-                        <Form.Control minLength={8} maxLength={13} type="text" size="sm" defaultValue={trainer?.phone} onChange={(e) => setTrainer({ ...trainer, phone: e.target.value })} placeholder="Telefono" disabled={saving} required />
+                        <Form.Control minLength={8} maxLength={13} type="text" size="sm" defaultValue={newData?.phone} onChange={(e) => setTrainer({ ...newData, phone: e.target.value })} placeholder="Telefono" disabled={saving} required />
                     </Col>
                 </Row>
                 <Row className="mb-3">
                     <Col xs="12" md="8">
-                        <Form.Label><span className="text-danger">*</span> Dirección</Form.Label>
-                        <Form.Control type="text" size="sm" value={trainer?.specialty || ''} onChange={(e) => setTrainer({ ...trainer, specialty: e.target.value })} placeholder="Dirección" disabled={saving} required />
+                        <Form.Label><span className="text-danger">*</span> Especialidad</Form.Label>
+                        <Form.Control type="text" size="sm" value={newData?.specialty || ''} onChange={(e) => setTrainer({ ...newData, specialty: e.target.value })} placeholder="Especialidad" disabled={saving} required />
                     </Col>
                     <Col xs="12" md="4">
-                        <Form.Label><span className="text-danger">*</span> Fecha de cumpleaños</Form.Label>
-                        <Form.Control type="date" size="sm" value={moment(trainer?.hireDate).tz('America/Bogota').format('YYYY-MM-DD')} onChange={(e) => setTrainer({ ...trainer, hireDate: moment(e.target.value).tz('America/Bogota').toDate() })} disabled={saving} required />
+                        <Form.Label><span className="text-danger">*</span> Fecha de contratación</Form.Label>
+                        <Form.Control type="date" size="sm" value={moment(newData?.hireDate).tz('America/Bogota').format('YYYY-MM-DD')} onChange={(e) => setTrainer({ ...newData, hireDate: moment(e.target.value).tz('America/Bogota').toDate() })} disabled={saving} required />
                     </Col>
                 </Row>
                 {/* <Row className="mb-3">
