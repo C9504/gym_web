@@ -36,7 +36,6 @@ const Profile = () => {
         }
         await axios.get(`${apiRequest()}/${role}/me`, { headers: { Authorization: `Bearer ${keycloak.token}` }, withCredentials: false }).then((res) => {
             setProfile(res.data);
-            console.log(res.data);
         }).catch((error) => {
             console.log(error?.response?.status);
         });

@@ -11,9 +11,9 @@ const Layout = () => {
         if (initialized) {
             keycloak.loadUserProfile().then((userProfile) => {
                 console.log(initialized);
-                console.log(userProfile.id);
+                console.log(userProfile?.emailVerified);
             });
-            console.log(keycloak.hasResourceRole('member'));
+            console.log(keycloak?.tokenParsed?.resource_access?.gym_web?.roles[0]);
         }
     }, [initialized]);
 
@@ -26,7 +26,9 @@ const Layout = () => {
                             src={"/icon.png"}
                             alt="Icon"
                             style={{ width: '30px', height: '30px', marginRight: '8px' }} // Ajusta el tamaño del ícono si es necesario
-                        /> Gym JP</Navbar.Brand>
+                        /> Gym JP {keycloak.authenticated && (
+                            <sub className="text-danger">{keycloak?.tokenParsed?.resource_access?.gym_web?.roles[0]}</sub>
+                        )}</Navbar.Brand>
                     <Navbar.Toggle aria-controls="navbarResponsive" />
                     <Navbar.Collapse id="navbarResponsive">
                         <Nav className="ms-auto my-2 my-lg-0">
