@@ -1,13 +1,12 @@
 import { useKeycloak } from "@react-keycloak/web";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Alert, Button, Col, Container, Row, Table } from "react-bootstrap";
-import moment from "moment-timezone";
+import { Alert, Button, Card, Col, Container, Row } from "react-bootstrap";
 import { apiRequest } from "../../../services/config";
-import CreateMembers from "./create";
-import EditMember from "./edit";
+import CreateClass from "./create";
+import EditClass from "./edit";
 
-const ListMembers = () => {
+const ListClases = () => {
 
     const { keycloak, initialized } = useKeycloak();
     const [list, setList] = useState([]);
@@ -25,15 +24,15 @@ const ListMembers = () => {
     }, []);
 
     useEffect(() => {
-        if(finished) {
+        if (finished) {
             getAll();
         }
     }, [finished]);
 
-    const handleNew = () => { 
-        setNewData(!newData); 
-        setUpdate(false); 
-        setUpdated(false); 
+    const handleNew = () => {
+        setNewData(!newData);
+        setUpdate(false);
+        setUpdated(false);
         setSaved(false);
     };
 
@@ -46,7 +45,7 @@ const ListMembers = () => {
     };
 
     const getAll = async () => {
-        await axios.get(`${apiRequest()}/members`, { headers: { Authorization: `Bearer ${keycloak.token}` }, withCredentials: false }).then((res) => {
+        await axios.get(`${apiRequest()}/gym-classes`, { headers: { Authorization: `Bearer ${keycloak.token}` }, withCredentials: false }).then((res) => {
             setList(res.data);
             setFinished(false);
             console.log(initialized);
@@ -59,23 +58,23 @@ const ListMembers = () => {
         <Container>
             <Row>
                 <Col>
-                    <h1 className="mt-5 mb-3">Miembros</h1>
+                    <h1 className="mt-3 mb-3">Clases</h1>
                 </Col>
             </Row>
             <Row>
                 <Col>
                     <Button className="float-end align-self-center mb-3" variant="primary" size="sm" onClick={handleNew}>
-                        {newData ? "Cancelar" : "Nuevo Miembro"}
+                        {newData ? "Cancelar" : "Nueva Clase"}
                     </Button>
                 </Col>
             </Row>
             <Row className="mb-3">
                 <Col>
                     {newData && (
-                        <CreateMembers setNew={setNewData} setSaved={setSaved} setFinished={setFinished} setMessage={setMessage} setType={setType}/>
+                        <CreateClass setNew={setNewData} setSaved={setSaved} setFinished={setFinished} setMessage={setMessage} setType={setType} />
                     )}
                     {update && (
-                        <EditMember setUpdate={setUpdate} setUpdated={setUpdated} setFinished={setFinished} data={data} setMessage={setMessage} setType={setType} />
+                        <EditClass setUpdate={setUpdate} setUpdated={setUpdated} setFinished={setFinished} data={data} setMessage={setMessage} setType={setType} />
                     )}
                     <Alert variant={type} show={saved} onClose={() => setSaved(!saved)} dismissible>
                         {message}
@@ -85,9 +84,32 @@ const ListMembers = () => {
                     </Alert>
                 </Col>
             </Row>
+            <Row xs={1} md={4} className="g-4">
+                {list.map((data, _) => (
+                    <Col key={data?.id}>
+                        <Card>
+                            <Card.Img variant="top" src="/assets/img/yoga.jpg" />
+                            <Card.Body>
+                                <Card.Title>{data?.name}</Card.Title>
+                                <Card.Text>
+                                    {data?.description}
+                                </Card.Text>
+                                <Card.Text>
+                                    <Button variant="secondary" size="sm" onClick={() => handleEdit(data)}>
+                                        <i className="bi bi-pencil-square"></i> Editar
+                                    </Button>
+                                </Card.Text>
+                            </Card.Body>
+                            <Card.Footer>
+                                <small className="text-muted">Last updated 3 mins ago</small>
+                            </Card.Footer>
+                        </Card>
+                    </Col>
+                ))}
+            </Row>
             <Row>
                 <Col>
-                    <Table size="sm" striped bordered hover responsive>
+                    {/* <Table size="sm" striped bordered hover responsive>
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -122,11 +144,11 @@ const ListMembers = () => {
                                 </tr>
                             ))}
                         </tbody>
-                    </Table>
+                    </Table> */}
                 </Col>
             </Row>
         </Container>
     );
 };
 
-export default ListMembers;
+export default ListClases;

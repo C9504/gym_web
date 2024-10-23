@@ -25,27 +25,27 @@ const Welcome = () => {
                     <Carousel className="mb-3">
                         <Carousel.Item>
                             <div className="d-flex justify-content-center align-items-center pt-1" style={{ height: '150px' }}>
-                                <h3 className="text-center mx-3">"En Gym JP, el poder está en ti. ¡Te ayudamos a descubrirlo con cada entrenamiento!"</h3>
+                                <h3 className="text-center mx-3">"En Gym JP, el poder está en ti.<br/>¡Te ayudamos a descubrirlo con cada entrenamiento!"</h3>
                             </div>
                         </Carousel.Item>
                         <Carousel.Item>
                             <div className="d-flex justify-content-center align-items-center pt-1" style={{ height: '150px' }}>
-                                <h3 className="text-center mx-3">"Clases diseñadas para todos los niveles. ¡Desde principiantes hasta expertos, estamos aquí para ti!"</h3>
+                                <h3 className="text-center mx-3">"Clases diseñadas para todos los niveles.<br/>¡Desde principiantes hasta expertos, estamos aquí para ti!"</h3>
                             </div>
                         </Carousel.Item>
                         <Carousel.Item>
                             <div className="d-flex justify-content-center align-items-center pt-1" style={{ height: '150px' }}>
-                                <h3 className="text-center mx-3">"Transforma tu cuerpo y mente en un ambiente motivador y moderno. ¡Únete hoy a Gym JP!"</h3>
+                                <h3 className="text-center mx-3">"Transforma tu cuerpo y mente en un ambiente motivador y moderno.<br/>¡Únete hoy a Gym JP!"</h3>
                             </div>
                         </Carousel.Item>
                         <Carousel.Item>
                             <div className="d-flex justify-content-center align-items-center pt-3" style={{ height: '150px' }}>
-                                <h3 className="text-center mx-3">"Entrenadores que se preocupan por tu progreso. ¡Descubre tu potencial con nosotros!"</h3>
+                                <h3 className="text-center mx-3">"Entrenadores que se preocupan por tu progreso.<br/>¡Descubre tu potencial con nosotros!"</h3>
                             </div>
                         </Carousel.Item>
                         <Carousel.Item>
                             <div className="d-flex justify-content-center align-items-center pt-3" style={{ height: '150px' }}>
-                                <h3 className="text-center mx-3">"Tu bienestar es nuestra misión. ¡Haz que cada entrenamiento cuente en Gym JP!"</h3>
+                                <h3 className="text-center mx-3">"Tu bienestar es nuestra misión.<br/>¡Haz que cada entrenamiento cuente en Gym JP!"</h3>
                             </div>
                         </Carousel.Item>
                     </Carousel>

@@ -20,7 +20,7 @@ const Layout = () => {
     return (
         <>
             <Navbar bg="light" expand="lg" className="py-3" id="mainNav" sticky="top">
-                <Container className="px-4 px-lg-5">
+                <Container fluid className="px-4 px-lg-5">
                     <Navbar.Brand as={Link} to={"/"}>
                         <img
                             src={"/icon.png"}
@@ -36,9 +36,9 @@ const Layout = () => {
                             <Nav.Link as={Link} to={"/plans"}>Programas</Nav.Link>
                             {keycloak.hasResourceRole('admin') && (
                                 <>
-                                    {/* <Nav.Link as={Link} to={"/progress"}>Progreso</Nav.Link> */}
-                                    <Nav.Link as={Link} to={"/members"}>Miembros</Nav.Link>
-                                    <Nav.Link as={Link} to={"/trainers"}>Entrenadores</Nav.Link>
+                                    <Nav.Link as={Link} to={"/admin/classes"}>Clases</Nav.Link>
+                                    <Nav.Link as={Link} to={"/admin/members"}>Miembros</Nav.Link>
+                                    <Nav.Link as={Link} to={"/admin/trainers"}>Entrenadores</Nav.Link>
                                 </>
                             )}
                             {keycloak.hasResourceRole('member') && (
@@ -55,7 +55,7 @@ const Layout = () => {
                             {/* <Nav.Link as={Link} to={"/memberships"}>Membresías</Nav.Link> */}
                             <Nav.Link as={Link} to={"/contact"}>Contacto</Nav.Link>
                             {!keycloak.authenticated && (
-                                <Nav.Link as={Link} to={"/register"} className="btn bg-primary text-white">Unirme</Nav.Link>
+                                <Nav.Link as={Link} to={"/register"} className="btn bg-primary text-white">¡Unete ya!</Nav.Link>
                             )}
                             {keycloak.authenticated && (
                                 <NavDropdown title={<span><i className="bi bi-person-circle text-danger" /> {keycloak?.profile?.firstName}</span>} id="basic-nav-dropdown-settings">

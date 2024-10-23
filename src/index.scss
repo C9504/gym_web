@@ -1,7 +1,17 @@
 // Sobrescribir las variables de Bootstrap
 $primary: #b00020;
 /* Cambiar el color primario de Bootstrap */
-$secondary: #6c757d;
+$secondary: black;
+
+.card {
+  border-color: #b00020 !important;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-size: 12px;
+}
+
+table {
+  font-size: 12px;
+}
 
 // Importar Bootstrap con las variables modificadas
 @import '~bootstrap/scss/bootstrap';

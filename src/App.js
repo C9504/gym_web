@@ -16,6 +16,7 @@ import ErrorPage from "./components/public/errors/404";
 import Plan from "./components/private/plans";
 import ListMembers from "./components/private/members/list";
 import ListTrainers from "./components/private/trainers/list";
+import ListClases from "./components/private/clases/list";
 
 function Main() {
 
@@ -86,8 +87,9 @@ function Main() {
 
         {/* Agrupando las rutas protegidas para administradores */}
         <Route element={<ProtectedRoutes role='admin' />}>
-          <Route path='/members' element={<ListMembers />} />
-          <Route path='/trainers' element={<ListTrainers />} />
+          <Route path='/admin/classes' element={<ListClases />} />
+          <Route path='/admin/members' element={<ListMembers />} />
+          <Route path='/admin/trainers' element={<ListTrainers />} />
           {/* <Route path='/reservations' element={<Reservations />} /> */}
         </Route>
       </Route>

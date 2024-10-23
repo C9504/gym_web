@@ -5,7 +5,7 @@ import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import moment from "moment-timezone";
 import { apiRequest } from "../../../services/config";
 
-const CreateTrainers = ({ setNew, setSaved, setFinished, setMessage, setType }) => {
+const CreateClass = ({ setNew, setSaved, setFinished, setMessage, setType }) => {
 
     const { keycloak, initialized } = useKeycloak();
     const [newData, setNewData] = useState({});
@@ -18,14 +18,14 @@ const CreateTrainers = ({ setNew, setSaved, setFinished, setMessage, setType }) 
     const saveData = async (event) => {
         event.preventDefault();
         setSaving(true);
-        await axios.post(`${apiRequest()}/trainers/register`, newData, { headers: { Authorization: `Bearer ${keycloak.token}` }, withCredentials: false }).then((res) => {
+        await axios.post(`${apiRequest()}/members/register`, newData, { headers: { Authorization: `Bearer ${keycloak.token}` }, withCredentials: false }).then((res) => {
             event.target.reset();
             setSaving(false);
             setSaved(true);
             setNew(false);
             setFinished(true);
             setType("success");
-            setMessage("Trainer guardado correctamente");
+            setMessage("Miembro guardado correctamente");
         }).catch((err) => {
             setType("danger");
             setMessage(err?.response?.data);
@@ -35,7 +35,7 @@ const CreateTrainers = ({ setNew, setSaved, setFinished, setMessage, setType }) 
     };
 
     return (
-        <Container>
+        <Container className="mb-3">
             <Form onSubmit={saveData}>
                 <h3 className="mb-3">Datos de contacto</h3>
                 <Row className="mb-3">
@@ -71,13 +71,17 @@ const CreateTrainers = ({ setNew, setSaved, setFinished, setMessage, setType }) 
                     </Col>
                 </Row>
                 <Row className="mb-3">
-                    <Col xs="12" md="8">
-                        <Form.Label><span className="text-danger">*</span> Especialidad</Form.Label>
-                        <Form.Control type="text" size="sm" value={newData?.specialty || ''} onChange={(e) => setNewData({ ...newData, specialty: e.target.value })} placeholder="Especialidad" disabled={saving} required />
+                    <Col xs="12" md="4">
+                        <Form.Label><span className="text-danger">*</span> Dirección</Form.Label>
+                        <Form.Control type="text" size="sm" defaultValue={newData?.address} onChange={(e) => setNewData({ ...newData, address: e.target.value })} placeholder="Dirección" disabled={saving} required />
                     </Col>
                     <Col xs="12" md="4">
-                        <Form.Label><span className="text-danger">*</span> Fecha de contratación</Form.Label>
-                        <Form.Control type="date" size="sm" value={moment(newData?.hireDate).tz('America/Bogota').format('YYYY-MM-DD')} onChange={(e) => setNewData({ ...newData, hireDate: moment(e.target.value).tz('America/Bogota').toDate() })} disabled={saving} required />
+                        <Form.Label><span className="text-danger">*</span> Fecha Union</Form.Label>
+                        <Form.Control type="date" size="sm" value={moment(newData?.joinDate).tz('America/Bogota').format('YYYY-MM-DD')} onChange={(e) => setNewData({ ...newData, joinDate: moment(e.target.value).tz('America/Bogota').toDate() })} disabled={saving} required />
+                    </Col>
+                    <Col xs="12" md="4">
+                        <Form.Label><span className="text-danger">*</span> Fecha de cumpleaños</Form.Label>
+                        <Form.Control type="date" size="sm" value={moment(newData?.birthDate).tz('America/Bogota').format('YYYY-MM-DD')} onChange={(e) => setNewData({ ...newData, birthDate: moment(e.target.value).tz('America/Bogota').toDate() })} disabled={saving} required />
                     </Col>
                 </Row>
                 {/* <Row className="mb-3">
@@ -97,4 +101,4 @@ const CreateTrainers = ({ setNew, setSaved, setFinished, setMessage, setType }) 
     );
 };
 
-export default CreateTrainers;
+export default CreateClass;

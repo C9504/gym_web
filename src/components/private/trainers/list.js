@@ -86,7 +86,7 @@ const ListTrainers = () => {
             </Row>
             <Row>
                 <Col>
-                    <Table striped bordered hover responsive>
+                    <Table striped bordered hover size="sm" responsive>
                         <thead>
                             <tr>
                                 <th>#</th>
