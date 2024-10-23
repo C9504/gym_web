@@ -17,6 +17,7 @@ import Plan from "./components/private/plans";
 import ListMembers from "./components/private/members/list";
 import ListTrainers from "./components/private/trainers/list";
 import ListClases from "./components/private/clases/list";
+import ListSubscriptions from "./components/private/subscriptions/list";
 
 function Main() {
 
@@ -90,7 +91,7 @@ function Main() {
           <Route path='/admin/classes' element={<ListClases />} />
           <Route path='/admin/members' element={<ListMembers />} />
           <Route path='/admin/trainers' element={<ListTrainers />} />
-          {/* <Route path='/reservations' element={<Reservations />} /> */}
+          <Route path='/admin/subscriptions' element={<ListSubscriptions />} />
         </Route>
       </Route>
       <Route path="*" element={<ErrorPage />} />

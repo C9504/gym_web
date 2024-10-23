@@ -39,6 +39,7 @@ const Layout = () => {
                                     <Nav.Link as={Link} to={"/admin/classes"}>Clases</Nav.Link>
                                     <Nav.Link as={Link} to={"/admin/members"}>Miembros</Nav.Link>
                                     <Nav.Link as={Link} to={"/admin/trainers"}>Entrenadores</Nav.Link>
+                                    <Nav.Link as={Link} to={"/admin/subscriptions"}>Suscripciones</Nav.Link>
                                 </>
                             )}
                             {keycloak.hasResourceRole('member') && (
