@@ -56,7 +56,7 @@ const Plan = () => {
         event.preventDefault();
         console.log(subscription);
         const toastId = toast.loading("Actualizando...", { hideProgressBar: false, position: "bottom-center" });
-        await axios.post(`${apiRequest()}/subscriptions`, {
+        await axios.post(`${apiRequest()}/subscriptions/register`, {
             startDate: subscription.startDate,
             endDate: subscription.endDate,
             member: member,
