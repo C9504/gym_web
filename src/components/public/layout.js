@@ -2,10 +2,25 @@ import { useKeycloak } from "@react-keycloak/web";
 import { useEffect } from "react";
 import { Link, Outlet } from "react-router-dom";
 import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
+import { apiRequest } from "../../services/config";
 
 const Layout = () => {
 
     const { keycloak, initialized } = useKeycloak();
+
+    useEffect(() => {
+        const sse = new EventSource(`${apiRequest()}/sse/payments/sse`, { withCredentials: false });
+        sse.onopen = (event) => {
+            console.log(event);
+        }
+        sse.onmessage = (event) => {
+            console.log(event.data);
+        };
+
+        sse.onerror = (event) => {
+            console.log(event);
+        };
+    }, [initialized]);
 
     useEffect(() => {
         if (initialized) {
