@@ -5,6 +5,7 @@ import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import moment from "moment-timezone";
 import { apiRequest } from "../../../services/config";
 import Select from "react-select";
+import { defaultStyeSelect } from "../../customs/select";
 
 const EditMember = ({ setUpdate, setUpdated, setFinished, data, plans, members, setMessage, setType }) => {
 
@@ -48,7 +49,7 @@ const EditMember = ({ setUpdate, setUpdated, setFinished, data, plans, members, 
                         <Select
                             className="basic-select"
                             classNamePrefix="select"
-                            styles={{ control: (baseStyles, state) => ({ ...baseStyles, borderColor: state.isFocused ? 'black' : '#b00020' }) }}
+                            styles={defaultStyeSelect}
                             value={members.find((m) => m.value?.id === request?.member?.id) || members[0]}
                             onChange={(e) => { setRequest({ ...request, member: e.value }); console.log(e.value); }}
                             // isDisabled={isDisabled}
@@ -68,7 +69,7 @@ const EditMember = ({ setUpdate, setUpdated, setFinished, data, plans, members, 
                         <Select
                             className="basic-select"
                             classNamePrefix="select"
-                            styles={{ control: (baseStyles, state) => ({ ...baseStyles, borderColor: state.isFocused ? 'black' : '#b00020' }) }}
+                            styles={defaultStyeSelect}
                             value={plans.find((m) => m.value?.id === request?.plan?.id) || plans[0]}
                             onChange={(e) => setRequest({ ...request, plan: e.value })}
                             // isDisabled={isDisabled}
